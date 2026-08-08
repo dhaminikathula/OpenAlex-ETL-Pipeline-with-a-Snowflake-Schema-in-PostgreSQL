@@ -246,6 +246,9 @@ source venv/bin/activate # Linux/macOS
 
 # Run the full ETL pipeline
 python etl.py
+
+# Run post-load verification
+python verify.py
 ```
 
 ### Expected output
