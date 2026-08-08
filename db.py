@@ -49,7 +49,20 @@ def close_connection() -> None:
     _connection = None
 
 
-@contextmanager
+def ping_connection() -> bool:
+    """
+    Check whether the current connection is alive by running a lightweight
+    SELECT 1 query. Returns True if healthy, False otherwise.
+    """
+    try:
+        conn = get_connection()
+        with conn.cursor() as cur:
+            cur.execute("SELECT 1")
+        return True
+    except Exception as exc:
+        logger.warning("Connection ping failed: %s", exc)
+        return False
+
 def get_cursor(
     named: bool = False,
 ) -> Generator[psycopg2.extensions.cursor, None, None]:
