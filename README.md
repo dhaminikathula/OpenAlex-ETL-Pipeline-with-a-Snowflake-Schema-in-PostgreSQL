@@ -420,6 +420,14 @@ Set `TARGET_WORKS=1000` in your `.env` file.
 
 Each batch is wrapped in a transaction. A dropped connection will roll back the current batch only. Re-run `python etl.py` to continue; the pipeline will resume from the last committed state.
 
+**Q: How do I verify the data was loaded correctly?**
+
+Run `python verify.py` after the pipeline completes. It checks all 7 tables for non-zero counts, validates SCD Type 2 integrity on `dim_authors`, and confirms foreign key consistency.
+
+**Q: Where can I find sample SQL queries to explore the data?**
+
+See `analysis_queries.sql` in the project root. It contains 8 sections covering publication trends, top works, concept distribution, author collaboration networks, and data quality checks. Run it in `psql -d openalex_dw`.
+
 ---
 
 ## License
