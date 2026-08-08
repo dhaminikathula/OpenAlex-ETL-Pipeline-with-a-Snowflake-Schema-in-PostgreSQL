@@ -136,16 +136,22 @@ The schema follows a **snowflake pattern**: `dim_authors` is normalised off `dim
 
 ```
 OpenAlex-ETL-Pipeline-with-a-Snowflake-Schema-in-PostgreSQL/
-├── etl.py            # 🚀 Main entry point — run this
-├── config.py         # Environment variable management
-├── db.py             # PostgreSQL connection management
-├── schema.py         # CREATE TABLE DDL + schema setup
-├── extractor.py      # OpenAlex API client with pagination & backoff
-├── transformer.py    # Raw JSON → structured Python dicts
-├── loader.py         # DB inserts, upserts, SCD Type 2 logic
-├── requirements.txt  # Python dependencies
-├── .env.example      # Environment variable template
-├── etl_pipeline.log  # Runtime log (auto-generated)
+├── etl.py                  # 🚀 Main entry point — run this
+├── config.py               # Environment variable management
+├── db.py                   # PostgreSQL connection management
+├── schema.py               # CREATE TABLE DDL + schema setup
+├── extractor.py            # OpenAlex API client with pagination & backoff
+├── transformer.py          # Raw JSON → structured Python dicts
+├── loader.py               # DB inserts, upserts, SCD Type 2 logic
+├── verify.py               # ✅ Post-run integrity verification
+├── demo_run.py             # Quick test run with small dataset
+├── analysis_queries.sql    # 📊 Exploratory SQL for the data warehouse
+├── requirements.txt        # Python dependencies
+├── .env.example            # Environment variable template
+├── CHANGELOG.md            # Version history
+├── CONTRIBUTING.md         # Developer guide
+├── LICENSE                 # MIT License
+├── etl_pipeline.log        # Runtime log (auto-generated)
 └── README.md
 ```
 
