@@ -232,6 +232,8 @@ All configuration is managed via environment variables. Copy `.env.example` to `
 | `BATCH_SIZE` | No | `200` | Works per API request (max 200) |
 | `MAX_RETRIES` | No | `7` | Max retries on 429/503 errors |
 | `BASE_WAIT_SECONDS` | No | `1` | Base wait for exponential backoff |
+| `LOG_LEVEL` | No | `INFO` | Logging verbosity (DEBUG/INFO/WARNING/ERROR) |
+| `DB_CONNECT_TIMEOUT` | No | `10` | PostgreSQL connection timeout in seconds |
 
 > **Note on `OPENALEX_EMAIL`**: Providing your email identifies your pipeline to OpenAlex and places you in the "polite pool," which has more generous rate limits. It is strongly recommended.
 
