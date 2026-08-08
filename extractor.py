@@ -25,7 +25,9 @@ logger = logging.getLogger(__name__)
 _USER_AGENT = (
     "OpenAlexETL/1.0 "
     f"(mailto:{config.OPENALEX_EMAIL}; "
-    "https://github.com/openalex-etl-pipeline)"
+    "Python-ETL-Pipeline; "
+    "Snowflake-Schema-PostgreSQL; "
+    "https://github.com/dhaminikathula/OpenAlex-ETL-Pipeline-with-a-Snowflake-Schema-in-PostgreSQL)"
 )
 
 _SESSION = requests.Session()
