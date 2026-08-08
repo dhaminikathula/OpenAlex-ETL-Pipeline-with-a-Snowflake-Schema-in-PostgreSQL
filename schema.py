@@ -92,14 +92,19 @@ CREATE TABLE IF NOT EXISTS bridge_work_citations (
 
 # Ordered so that FK dependencies are always created first
 _ALL_DDL = [
-    ("dim_institutions",     DDL_DIM_INSTITUTIONS),
-    ("dim_authors",          DDL_DIM_AUTHORS),
-    ("idx_dim_authors",      DDL_IDX_AUTHORS_CURRENT),
-    ("dim_concepts",         DDL_DIM_CONCEPTS),
-    ("fact_works",           DDL_FACT_WORKS),
-    ("bridge_work_authors",  DDL_BRIDGE_WORK_AUTHORS),
-    ("bridge_work_concepts", DDL_BRIDGE_WORK_CONCEPTS),
-    ("bridge_work_citations",DDL_BRIDGE_WORK_CITATIONS),
+    ("dim_institutions",       DDL_DIM_INSTITUTIONS),
+    ("dim_authors",            DDL_DIM_AUTHORS),
+    ("idx_dim_authors",        DDL_IDX_AUTHORS_CURRENT),
+    ("dim_concepts",           DDL_DIM_CONCEPTS),
+    ("fact_works",             DDL_FACT_WORKS),
+    ("bridge_work_authors",    DDL_BRIDGE_WORK_AUTHORS),
+    ("bridge_work_concepts",   DDL_BRIDGE_WORK_CONCEPTS),
+    ("bridge_work_citations",  DDL_BRIDGE_WORK_CITATIONS),
+    # Performance indexes
+    ("idx_fact_works_year",    "CREATE INDEX IF NOT EXISTS idx_fact_works_year ON fact_works (publication_year);"),
+    ("idx_fact_works_cited",   "CREATE INDEX IF NOT EXISTS idx_fact_works_cited ON fact_works (cited_by_count DESC);"),
+    ("idx_bridge_wa_author",   "CREATE INDEX IF NOT EXISTS idx_bridge_wa_author ON bridge_work_authors (author_key);"),
+    ("idx_bridge_wc_concept",  "CREATE INDEX IF NOT EXISTS idx_bridge_wc_concept ON bridge_work_concepts (concept_id);"),
 ]
 
 
