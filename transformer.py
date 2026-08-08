@@ -18,6 +18,9 @@ logger = logging.getLogger(__name__)
 # Default date used when a work has no publication_date or publication_year
 _FALLBACK_DATE = date(1900, 1, 1)
 
+# Maximum title length stored in the database
+_TITLE_MAX_LENGTH = 5000
+
 
 def _parse_date(raw: Optional[str], year: Optional[int]) -> date:
     """
@@ -158,7 +161,7 @@ def transform_work(raw_work: dict) -> Optional[dict]:
     # ── Fact record ──────────────────────────────────────────────────────────
     work_record = {
         "work_id":          work_id,
-        "title":            str(title)[:5000],  # guard against absurdly long titles
+        "title":            str(title)[:_TITLE_MAX_LENGTH],
         "publication_year": pub_year,
         "cited_by_count":   cited_by,
         "type":             work_type,
@@ -226,16 +229,25 @@ def transform_batch(raw_works: list[dict]) -> list[dict]:
     Returns a list of transformed work dicts (see transform_work for shape).
     """
     results = []
+    skipped = 0
     for raw in raw_works:
         try:
             transformed = transform_work(raw)
             if transformed is not None:
                 results.append(transformed)
+            else:
+                skipped += 1
         except Exception as exc:
+            skipped += 1
             logger.warning(
                 "Unexpected error transforming work %s: %s",
                 raw.get("id", "<unknown>"),
                 exc,
                 exc_info=True,
             )
+    if skipped:
+        logger.debug(
+            "Batch transform: %d accepted, %d skipped (no id/title or parse error).",
+            len(results), skipped,
+        )
     return results
