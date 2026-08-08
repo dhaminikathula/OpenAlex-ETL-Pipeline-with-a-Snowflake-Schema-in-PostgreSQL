@@ -27,6 +27,8 @@ import extractor
 import transformer
 import loader
 
+__version__ = "1.0.0"
+
 # ─── Logging setup ────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -45,6 +47,7 @@ def print_banner() -> None:
     banner = f"""
 ╔══════════════════════════════════════════════════════════════════╗
 ║         OpenAlex ETL Pipeline — Snowflake Schema in PostgreSQL  ║
+║                         Version {__version__:<33}║
 ╠══════════════════════════════════════════════════════════════════╣
 ║  Target works  : {config.TARGET_WORKS:<47,d}║
 ║  Batch size    : {config.BATCH_SIZE:<47,d}║
