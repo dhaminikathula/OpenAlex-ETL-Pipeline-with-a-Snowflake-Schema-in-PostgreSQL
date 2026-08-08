@@ -40,8 +40,15 @@ BATCH_SIZE: int = min(int(os.getenv("BATCH_SIZE", "200")), 200)  # API max is 20
 MAX_RETRIES: int = int(os.getenv("MAX_RETRIES", "7"))
 BASE_WAIT_SECONDS: float = float(os.getenv("BASE_WAIT_SECONDS", "1"))
 
+# ─── Logging and diagnostics ──────────────────────────────────────────────────
+LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
+
+# ─── Database connection settings ─────────────────────────────────────────────
+DB_CONNECT_TIMEOUT: int = int(os.getenv("DB_CONNECT_TIMEOUT", "10"))
+
 # Build the DSN (Data Source Name) string for psycopg2
 DB_DSN: str = (
     f"host={DB_HOST} port={DB_PORT} dbname={DB_NAME} "
-    f"user={DB_USER} password={DB_PASSWORD}"
+    f"user={DB_USER} password={DB_PASSWORD} "
+    f"connect_timeout={DB_CONNECT_TIMEOUT}"
 )
