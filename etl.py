@@ -80,6 +80,10 @@ def main() -> None:
 
     # ── Step 1: Schema creation ────────────────────────────────────────────────
     logger.info("=== PHASE 1: Schema Setup ===")
+    # Verify DB connectivity before proceeding
+    if not db.ping_connection():
+        logger.error("Cannot reach the database. Check your .env credentials.")
+        sys.exit(1)
     try:
         schema.create_tables()
     except Exception:
