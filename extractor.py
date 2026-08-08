@@ -90,6 +90,18 @@ def _fetch_with_backoff(url: str, params: dict) -> Optional[dict]:
                 )
                 time.sleep(wait_time)
 
+            elif response.status_code == 500:
+                # Internal server error — retry with backoff
+                wait_time = base_wait * (2 ** attempt) + random.uniform(0.0, 1.0)
+                logger.warning(
+                    "Server error (500) on attempt %d/%d. "
+                    "Retrying in %.2fs...",
+                    attempt + 1,
+                    max_retries,
+                    wait_time,
+                )
+                time.sleep(wait_time)
+
             else:
                 # Non-recoverable HTTP error
                 logger.error(
