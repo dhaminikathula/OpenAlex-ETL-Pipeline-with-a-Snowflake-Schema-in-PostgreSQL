@@ -34,9 +34,13 @@ def get_connection() -> psycopg2.extensions.connection:
             config.DB_NAME,
             config.DB_USER,
         )
-        _connection = psycopg2.connect(config.DB_DSN)
-        # Use autocommit=False so we control transactions explicitly
-        _connection.autocommit = False
+        try:
+            _connection = psycopg2.connect(config.DB_DSN)
+            _connection.autocommit = False
+            logger.info("PostgreSQL connection established successfully.")
+        except psycopg2.OperationalError as exc:
+            logger.error("Failed to connect to PostgreSQL: %s", exc)
+            raise
     return _connection
 
 
